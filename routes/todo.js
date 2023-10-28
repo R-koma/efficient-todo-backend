@@ -30,6 +30,7 @@ router.put("/:id/complete", async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
     todo.status = "review";
+    todo.nextReviewDate = new Date(new Date().getTime() + 0 * 1000);
     const savedTodo = await todo.save();
     return res.status(200).json(savedTodo);
   } catch (err) {
