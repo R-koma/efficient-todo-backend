@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const todoRoute = require("./routes/todo");
 const reviewRoute = require("./routes/review");
+const completeRoute = require("./routes/complete");
 
 const PORT = 5005;
 const mongoose = require("mongoose");
@@ -19,6 +20,7 @@ mongoose
 app.use(express.json());
 app.use("/api/todo", todoRoute);
 app.use("/api/review", reviewRoute);
+app.use("/api/complete", completeRoute);
 
 app.get("/", (req, res) => {
   res.send("hello express");

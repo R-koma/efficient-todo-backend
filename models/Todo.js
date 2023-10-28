@@ -7,7 +7,7 @@ const TodoSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["todo", "review"],
+    enum: ["todo", "review", "complete"],
     default: "todo",
   },
   nextReviewDate: {

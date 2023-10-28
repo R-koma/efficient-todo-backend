@@ -53,12 +53,12 @@ router.put("/:id/complete", async (req, res) => {
     const todo = await Todo.findById(req.params.id);
     //忘却曲線
     const intervals = [
-      1 * 60 * 1000,
-      2 * 60 * 1000,
-      3 * 60 * 1000,
-      4 * 60 * 1000,
-      5 * 60 * 1000,
-      6 * 60 * 1000,
+      0.01 * 60 * 1000,
+      0.02 * 60 * 1000,
+      0.03 * 60 * 1000,
+      0.04 * 60 * 1000,
+      0.05 * 60 * 1000,
+      0.06 * 60 * 1000,
     ];
     if (!todo.reviewCount) {
       todo.reviewCount = 0;
@@ -68,8 +68,13 @@ router.put("/:id/complete", async (req, res) => {
       todo.nextReviewDate = new Date(
         new Date().getTime() + intervals[todo.reviewCount]
       );
+      todo.reviewCount++;
+    } else {
+      todo.status = "complete";
+      const savedTodo = await todo.save();
+      return res.status(200).json(savedTodo);
     }
-    todo.reviewCount++;
+
     const savedTodo = await todo.save();
     return res.status(200).json(savedTodo);
   } catch (err) {
