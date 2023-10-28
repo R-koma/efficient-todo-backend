@@ -16,9 +16,9 @@ mongoose
     console.log(err);
   });
 
-// app.use(express.json());
-// app.use("/api/todo", todoRoute);
-// app.use("/api/review", reviewRoute);
+app.use(express.json());
+app.use("/api/todo", todoRoute);
+app.use("/api/review", reviewRoute);
 
 app.get("/", (req, res) => {
   res.send("hello express");
