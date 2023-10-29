@@ -12,4 +12,13 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedComplete = await Todo.findByIdAndRemove(req.params.id);
+    return res.status(200).json(deletedComplete);
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
 module.exports = router;
