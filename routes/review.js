@@ -3,24 +3,6 @@ const Todo = require("../models/Todo");
 // const Review = require("../models/Review");
 
 //CRUD
-//TodoのstatusにあるreviewをReviewモデルとして新しく作成。
-// router.post("/", async (req, res) => {
-//   try {
-//     const reviews = await Todo.find({ status: "review" });
-
-//     for (let reviewTodo of reviews) {
-//       const newReview = new Review({
-//         title: reviewTodo.title,
-//       });
-//       await newReview.save();
-//       await reviewTodo.remove();
-//     }
-//     return res.status(200).json({ message: "status reviewをReviewへ移行" });
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// });
-
 //reviewを取得
 router.get("/", async (req, res) => {
   try {
@@ -34,18 +16,6 @@ router.get("/", async (req, res) => {
     return res.status(500).json(err);
   }
 });
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const now = new Date();
-//     const review = await Todo.find({
-//       status: "review",
-//       nextReviewDate: { $lt: now },
-//     });
-//     return res.status(200).json(review);
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// });
 
 //reviewを更新
 router.put("/:id/complete", async (req, res) => {
@@ -53,13 +23,22 @@ router.put("/:id/complete", async (req, res) => {
     const todo = await Todo.findById(req.params.id);
     //忘却曲線
     const intervals = [
-      0.01 * 60 * 1000,
-      0.02 * 60 * 1000,
-      0.03 * 60 * 1000,
-      0.04 * 60 * 1000,
-      0.05 * 60 * 1000,
-      0.06 * 60 * 1000,
+      60 * 60 * 1000, //1時間後
+      24 * 60 * 60 * 1000, //1日後
+      7 * 24 * 60 * 60 * 1000, //1週間後
+      14 * 24 * 60 * 60 * 1000, //2週間後
+      30 * 24 * 60 * 60 * 1000, //1ヶ月後
     ];
+
+    //テスト用
+    // const intervals = [
+    //   0.01 * 60 * 1000,
+    //   0.02 * 60 * 1000,
+    //   0.03 * 60 * 1000,
+    //   0.04 * 60 * 1000,
+    //   0.05 * 60 * 1000,
+    //   0.06 * 60 * 1000,
+    // ];
     if (!todo.reviewCount) {
       todo.reviewCount = 0;
     }
