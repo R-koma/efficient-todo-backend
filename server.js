@@ -1,4 +1,5 @@
 const express = require("express");
+// const cors = require("cors");
 const app = express();
 const todoRoute = require("./routes/todo");
 const reviewRoute = require("./routes/review");
@@ -17,6 +18,7 @@ mongoose
     console.log(err);
   });
 
+// app.use(cors());
 app.use(express.json());
 app.use("/api/todo", todoRoute);
 app.use("/api/review", reviewRoute);
